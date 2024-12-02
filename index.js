@@ -4,6 +4,8 @@ import userRouter from './routes/usersRoute.js'
 import mongoose from 'mongoose'
 import galleryItemRouter from './routes/galleryItemRouter.js'
 import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
+dotenv.config()
 
 const app = express()
 
