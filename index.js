@@ -8,11 +8,14 @@ import dotenv from 'dotenv'
 import categoryRouter from './routes//categoryRouter.js'
 import roomRouter from './routes/roomRouter.js'
 import bookingRouter from './routes/bookingRouter.js'
+import cors from 'cors'
 dotenv.config()
  
 
 
 const app = express()
+
+app.use(cors())
 
 app.use(bodyParser.json())
 
@@ -50,7 +53,7 @@ mongoose.connect(connectionString).then(
 app.use("/api/users",userRouter)
 app.use("/api/gallery",galleryItemRouter)
 app.use("/api/category",categoryRouter)
-app.use("/room",roomRouter)
+app.use("/api/room",roomRouter)
 app.use("/api/booking",bookingRouter)
 app.listen(5000,(req,res)=>{
   console.log("Sever is running on on port 5000")
