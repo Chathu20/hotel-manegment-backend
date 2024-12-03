@@ -1,7 +1,7 @@
 import Category from "../models/category.js";
 import { isAdminValid } from "./userControllers.js";
 
-//----------------------------Add new Category-------------------------
+//-----Add Category-------
 export function createCategory(req, res){
     if(req.user == null){
         res.status(401).json({
@@ -33,7 +33,7 @@ export function createCategory(req, res){
     )
 }
 
-//------------------------------Delete Category--------------------------------
+//--------Delete Category--------
 export function deleteCategory(req, res){
     if(req.user == null){
         res.status(401).json({
@@ -63,7 +63,7 @@ export function deleteCategory(req, res){
     )
 }
 
-//---------------------------Show All Categories------------------------------
+//-------Show Categories--------
 export function getCategory(req, res){
     Category.find().then(
         (result)=>{
@@ -80,7 +80,7 @@ export function getCategory(req, res){
     )
 }
 
-//---------------Get Category Details by it's Name--------------------
+//------ByName Category----------
 export function getCategoryByName(req, res){
     const name = req.params.name
     Category.findOne({name: name}).then(
@@ -104,7 +104,7 @@ export function getCategoryByName(req, res){
     )
 }
 
-//------------------------Update Category------------------------------
+//-------Update Category-------
 export function updateCategory(req, res){
     if(!isAdminValid(req)){
         res.status(403).json({
