@@ -19,7 +19,8 @@ app.use(cors())
 
 app.use(bodyParser.json())
 
-const connectionString = process.env.MONGO_URL
+const connectionString = process.env.MONGO_URL;
+
 app.use((req,res,next)=>{
 
   const token = req.header("Authorization")?.replace("Bearer ", "")
