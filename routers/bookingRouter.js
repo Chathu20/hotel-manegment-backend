@@ -1,5 +1,6 @@
 import express from 'express';
-import getAllBookings, { createBooking, createBookingUsingCategory, retrieveBookingByDate } from '../controllers/bookingControllers.js';
+
+import getAllBookings, { createBooking, createBookingUsingCategory, retrieveBookingByDate } from "../controllers/bookingController.js";
 
 const bookingRouter = express.Router();
 

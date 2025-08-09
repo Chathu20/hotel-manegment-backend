@@ -2,92 +2,94 @@ import Booking from "../models/booking.js";
 import Room from "../models/room.js";
 import { isCustomerValid } from "./userControllers.js";
 
+//-------------------New Booking Function--------------------
 export function createBooking(req, res) {
-	if (!isCustomerValid(req)) {
-		res.status(403).json({
-			message: "Forbidden",
-		});
-		return;
-	}
+  if (!isCustomerValid(req)) {
+    res.status(403).json({
+      message: "Forbidden",
+    });
+    return;
+  }
 
-	const startingId = 1200;
+  const startingId = 1200;
 
-	Booking.countDocuments({})
-		.then((count) => {
-			console.log(count);
-			const newId = startingId + count + 1;
-			const newBooking = new Booking({
-				bookingId: newId,
-				roomId: req.body.roomId,
-				email: req.user.email,
-				start: req.body.start,
-				end: req.body.end,
-			});
-			newBooking
-				.save()
-				.then((result) => {
-					res.json({
-						message: "Booking created successfully",
-						result: result,
-					});
-				})
-				.catch((err) => {
-					res.json({
-						message: "Booking creation failed",
-						error: err,
-					});
-				});
-		})
-		.catch((err) => {
-			res.json({
-				message: "Booking creation failed",
-				error: err,
-			});
-		});
+  Booking.countDocuments({})
+    .then((count) => {
+      const newId = startingId + count + 1;
+      const newBooking = new Booking({
+        bookingId: newId,
+        roomId: req.body.roomId,
+        email: req.user.email,
+        start: req.body.start,
+        end: req.body.end,
+      });
+      newBooking
+        .save()
+        .then((result) => {
+          res.json({
+            message: "Booking Created Successfully",
+            result: result,
+          });
+        })
+        .catch((err) => {
+          res.json({
+            message: "Booking Creation Failed",
+            error: err,
+          });
+          console.log("one")
+        });
+    })
+    .catch((err) => {
+      res.json({
+        message: "Booking Creation Failed",
+        error: err,
+      });
+      console.log("Two")
+    });
 }
 
 export default function getAllBookings(req, res) {
-	Booking.find()
-		.then((result) => {
-			res.json({
-				message: "All bookings",
-				result: result,
-			});
-		})
-		.catch((err) => {
-			res.json({
-				message: "Failed to get all bookings",
-				error: err,
-			});
-		});
+  Booking.find()
+    .then((result) => {
+      res.json({
+        message: "All bookings",
+        result: result,
+      });
+    })
+    .catch((err) => {
+      res.json({
+        message: "Failed to get all bookings",
+        error: err,
+      });
+    });
 }
 
 export function retrieveBookingByDate(req, res) {
-	const start = req.body.start;
-	const end = req.body.end;
-	console.log(start);
-	console.log(end);
+  const start = req.body.start;
+  const end = req.body.end;
+  console.log(start);
+  console.log(end);
 
-	Booking.find({
-		start: {
-			$gte: start,
-		},
-		end: {
-			$lt: new Date(end),
-		},
-	})
-		.then((result) => {
-			res.json({
-				message: "Filtered bookings",
-				result: result,
-			});
-		})
-		.catch((err) => {
-			res.json({
-				message: "Failed to get filtered bookings",
-				error: err,
-			});
-		});
+  Booking.find({
+    start: {
+      $gte: start,
+    },
+    end: {
+      $lt: new Date(end),
+    },
+  })
+    .then((result) => {
+      res.json({
+        message: "Filtered bookings",
+        result: result,
+      });
+    })
+    .catch((err) => {
+      res.json({
+        message: "Failed to get filtered bookings",
+        error: err,
+      });
+    });
 }
 
 export async function createBookingUsingCategory(req, res) {
@@ -121,7 +123,9 @@ export async function createBookingUsingCategory(req, res) {
 		// Find bookings that overlap with the given dates
 		const overlappingBookings = await Booking.find({
 			$or: [
-				{ start: { $lt: endDate }, end: { $gt: startDate } }, // Full or partial overlap
+				{ start: { $lt: endDate }, 
+        end: { $gt: startDate } 
+      }, // Full or partial overlap
 			],
 		});
 
