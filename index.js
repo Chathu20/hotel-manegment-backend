@@ -46,7 +46,7 @@ mongoose.connect(connectionString).then(
     }
 )
 
-app.use("/api/users", userRouter)
+app.use("/api/user", userRouter)
 app.use("/api/gallery", galleryItemRouter)
 app.use("/api/category", categoryRouter)
 app.use("/api/room", roomRouter)
